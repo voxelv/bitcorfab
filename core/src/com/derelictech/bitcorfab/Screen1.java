@@ -21,6 +21,8 @@ public class Screen1 extends ScreenAdapter {
 
     public Screen1() {
         camera = new OrthographicCamera(64, 64);
+        camera.position.set(32, 32, 0);
+        camera.update();
         batch = new SpriteBatch();
         img = new Texture("test_img.png");
 
@@ -44,7 +46,7 @@ public class Screen1 extends ScreenAdapter {
     public void render(float delta) {
         batch.setProjectionMatrix(camera.projection);
         batch.begin();
-        batch.draw(img, -32, -32);
+        batch.draw(img, 0, 0, 64, 64);
         batch.end();
     }
 
