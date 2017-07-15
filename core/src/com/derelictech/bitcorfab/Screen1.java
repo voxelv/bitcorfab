@@ -44,7 +44,7 @@ public class Screen1 extends ScreenAdapter {
 
     @Override
     public void render(float delta) {
-        batch.setProjectionMatrix(camera.projection);
+        batch.setProjectionMatrix(camera.combined);
         batch.begin();
         batch.draw(img, 0, 0, 64, 64);
         batch.end();
