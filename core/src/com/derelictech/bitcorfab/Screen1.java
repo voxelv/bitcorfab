@@ -2,6 +2,8 @@ package com.derelictech.bitcorfab;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.ScreenAdapter;
+import com.badlogic.gdx.graphics.Camera;
+import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
@@ -15,21 +17,22 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 public class Screen1 extends ScreenAdapter {
     SpriteBatch batch;
     Texture img;
+    Camera camera;
 
     public Screen1() {
-        super();
+        camera = new OrthographicCamera(64, 64);
         batch = new SpriteBatch();
-        img = new Texture("measure.png");
+        img = new Texture("test_img.png");
 
-        if(Gdx.graphics.getGL30() != null)
-            System.out.println("OPENGL30");
-        if(Gdx.graphics.getGL20() != null)
-            System.out.println("OPENGL20");
+//        if(Gdx.graphics.getGL30() != null)
+//            System.out.println("OPENGL30");
+//        if(Gdx.graphics.getGL20() != null)
+//            System.out.println("OPENGL20");
 
-        System.out.println(Gdx.graphics.getType().toString());
-        System.out.println(Gdx.graphics.getDisplayMode().toString());
-        System.out.println("Backbuffer width: " + Gdx.graphics.getBackBufferWidth());
-        System.out.println("getWidth: " + Gdx.graphics.getWidth());
+//        System.out.println(Gdx.graphics.getType().toString());
+//        System.out.println(Gdx.graphics.getDisplayMode().toString());
+//        System.out.println("Backbuffer width: " + Gdx.graphics.getBackBufferWidth());
+//        System.out.println("getWidth: " + Gdx.graphics.getWidth());
     }
 
     @Override
@@ -39,9 +42,9 @@ public class Screen1 extends ScreenAdapter {
 
     @Override
     public void render(float delta) {
-        super.render(delta);
+        batch.setProjectionMatrix(camera.projection);
         batch.begin();
-        batch.draw(img, 0, 0);
+        batch.draw(img, -32, -32);
         batch.end();
     }
 
