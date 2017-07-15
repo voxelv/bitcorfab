@@ -28,6 +28,13 @@ public class Screen1 extends ScreenAdapter {
 
         System.out.println(Gdx.graphics.getType().toString());
         System.out.println(Gdx.graphics.getDisplayMode().toString());
+        System.out.println("Backbuffer width: " + Gdx.graphics.getBackBufferWidth());
+        System.out.println("getWidth: " + Gdx.graphics.getWidth());
+    }
+
+    @Override
+    public void show() {
+        Gdx.graphics.setWindowedMode(640, 480);
     }
 
     @Override
