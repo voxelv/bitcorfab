@@ -1,11 +1,18 @@
 package com.derelictech.bitcorfab;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.InputAdapter;
 import com.badlogic.gdx.ScreenAdapter;
 import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.glutils.HdpiUtils;
+import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.ui.Image;
+import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
+import com.badlogic.gdx.utils.viewport.FitViewport;
+import com.badlogic.gdx.utils.viewport.ScreenViewport;
 
 /**
  * Project: bitcorfab
@@ -15,16 +22,20 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
  * Description:
  */
 public class Screen1 extends ScreenAdapter {
-    SpriteBatch batch;
-    Texture img;
-    Camera camera;
+    Image img;
+    Stage stage;
 
     public Screen1() {
-        camera = new OrthographicCamera(64, 64);
-        camera.position.set(32, 32, 0);
-        camera.update();
-        batch = new SpriteBatch();
-        img = new Texture("test_img.png");
+        stage = new Stage( new FitViewport(CONST.VIEWPORT_W, CONST.VIEWPORT_H));
+
+        Gdx.input.setInputProcessor(stage);
+
+        img = new Image(new Texture("test_img.png"));
+        img.setPosition(0, 0);
+        img.setSize(CONST.WORLD_W, CONST.WORLD_W);
+        stage.addActor(img);
+        stage.setDebugAll(true);
+        System.out.println(stage.getViewport().getScreenX() + ", " + stage.getViewport().getScreenY());
 
 //        if(Gdx.graphics.getGL30() != null)
 //            System.out.println("OPENGL30");
@@ -38,16 +49,15 @@ public class Screen1 extends ScreenAdapter {
     }
 
     @Override
-    public void show() {
-        Gdx.graphics.setWindowedMode(640, 480);
+    public void render(float delta) {
+        stage.act();
+        stage.draw();
     }
 
     @Override
-    public void render(float delta) {
-        batch.setProjectionMatrix(camera.combined);
-        batch.begin();
-        batch.draw(img, 0, 0, 64, 64);
-        batch.end();
+    public void resize(int width, int height) {
+        stage.getViewport().update(width, height);
+        stage.getViewport().getCamera().position.set(CONST.WORLD_W / 2.0f, CONST.WORLD_H / 2.0f, 0.0f);
+        stage.getViewport().getCamera().update();
     }
-
 }
