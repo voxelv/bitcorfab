@@ -32,7 +32,7 @@ public class Screen1 extends ScreenAdapter {
 
         img = new Image(new Texture("test_img.png"));
         img.setPosition(0, 0);
-        img.setSize(CONST.WORLD_W, CONST.WORLD_W);
+        img.setSize(CONST.WORLD_W, CONST.WORLD_H);
         stage.addActor(img);
         stage.setDebugAll(true);
         System.out.println(stage.getViewport().getScreenX() + ", " + stage.getViewport().getScreenY());
