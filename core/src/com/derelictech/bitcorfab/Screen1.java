@@ -27,29 +27,16 @@ public class Screen1 extends ScreenAdapter {
     Stage stage;
 
     public Screen1() {
-        stage = new Stage( new FitViewport(CONST.VIEWPORT_W, CONST.VIEWPORT_H));
+        stage = new Stage( new FitViewport(CONST.WORLD_W, CONST.WORLD_H));
 
         Gdx.input.setInputProcessor(stage);
 
         img = new Image(new Texture("test_img.png"));
-        img.setPosition(0, 0);
-        img.setSize(10.0f, 10.0f);
-        Table table = new Table();
-        table.addActor(img);
-        table.setFillParent(true);
-        stage.addActor(table);
-        stage.setDebugAll(true);
-        System.out.println(stage.getViewport().getScreenX() + ", " + stage.getViewport().getScreenY());
+        img.setPosition(0.0f, 0.0f);
+        img.setSize(32.0f, 32.0f);
+        stage.addActor(img);
 
-//        if(Gdx.graphics.getGL30() != null)
-//            System.out.println("OPENGL30");
-//        if(Gdx.graphics.getGL20() != null)
-//            System.out.println("OPENGL20");
-
-//        System.out.println(Gdx.graphics.getType().toString());
-//        System.out.println(Gdx.graphics.getDisplayMode().toString());
-//        System.out.println("Backbuffer width: " + Gdx.graphics.getBackBufferWidth());
-//        System.out.println("getWidth: " + Gdx.graphics.getWidth());
+        debugGraphicsCalls();
     }
 
     @Override
@@ -61,7 +48,19 @@ public class Screen1 extends ScreenAdapter {
     @Override
     public void resize(int width, int height) {
         stage.getViewport().update(width, height);
-//        stage.getViewport().getCamera().position.set(CONST.WORLD_W / 2.0f, CONST.WORLD_W / 2.0f, 0.0f);
-//        stage.getViewport().getCamera().update();
+        debugGraphicsCalls();
+    }
+
+    private void debugGraphicsCalls() {
+        if(Gdx.graphics.getGL30() != null)
+            System.out.println("OPENGL30");
+        if(Gdx.graphics.getGL20() != null)
+            System.out.println("OPENGL20");
+
+        System.out.println("getType: " + Gdx.graphics.getType().toString());
+        System.out.println("getDisplayMode: " + Gdx.graphics.getDisplayMode().toString());
+        System.out.println("Backbuffer width: " + Gdx.graphics.getBackBufferWidth());
+        System.out.println("getWidth: " + Gdx.graphics.getWidth());
+        System.out.println("Viewport origin: " + stage.getViewport().getScreenX() + ", " + stage.getViewport().getScreenY());
     }
 }

@@ -11,6 +11,7 @@ public class DesktopLauncher {
         config.setWindowedMode((int)CONST.SCREEN_W, (int)CONST.SCREEN_H);
         config.setTitle("bitcorfab");
         config.setWindowIcon("bitcorfab_icon_16px.png", "bitcorfab_icon_64px.png", "bitcorfab_icon_256px.png");
+        config.setHdpiMode(Lwjgl3ApplicationConfiguration.HdpiMode.Logical);
 		new Lwjgl3Application(new BitCorFab(), config);
 	}
 }
