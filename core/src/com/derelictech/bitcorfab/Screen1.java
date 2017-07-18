@@ -27,13 +27,18 @@ public class Screen1 extends ScreenAdapter {
     Stage stage;
 
     public Screen1() {
-        stage = new Stage( new FitViewport(CONST.VIEWPORT_W, CONST.VIEWPORT_H));
+// NOTE: the FitViewport constructor takes WORLD size
+        //stage = new Stage( new FitViewport(CONST.VIEWPORT_W, CONST.VIEWPORT_H));
+        stage = new Stage( new FitViewport(CONST.WORLD_W, CONST.WORLD_H));
 
         Gdx.input.setInputProcessor(stage);
 
         img = new Image(new Texture("test_img.png"));
         img.setPosition(0, 0);
-        img.setSize(10.0f, 10.0f);
+// NOTE: why [10, 10]?
+        //img.setSize(10.0f, 10.0f);
+        img.setSize(CONST.WORLD_W, CONST.WORLD_H);
+
         Table table = new Table();
         table.addActor(img);
         table.setFillParent(true);
