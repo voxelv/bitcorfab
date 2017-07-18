@@ -10,6 +10,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.HdpiUtils;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
+import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
@@ -32,8 +33,11 @@ public class Screen1 extends ScreenAdapter {
 
         img = new Image(new Texture("test_img.png"));
         img.setPosition(0, 0);
-        img.setSize(CONST.WORLD_W, CONST.WORLD_H);
-        stage.addActor(img);
+        img.setSize(10.0f, 10.0f);
+        Table table = new Table();
+        table.addActor(img);
+        table.setFillParent(true);
+        stage.addActor(table);
         stage.setDebugAll(true);
         System.out.println(stage.getViewport().getScreenX() + ", " + stage.getViewport().getScreenY());
 
@@ -57,7 +61,7 @@ public class Screen1 extends ScreenAdapter {
     @Override
     public void resize(int width, int height) {
         stage.getViewport().update(width, height);
-        stage.getViewport().getCamera().position.set(CONST.WORLD_W / 2.0f, CONST.WORLD_H / 2.0f, 0.0f);
-        stage.getViewport().getCamera().update();
+//        stage.getViewport().getCamera().position.set(CONST.WORLD_W / 2.0f, CONST.WORLD_W / 2.0f, 0.0f);
+//        stage.getViewport().getCamera().update();
     }
 }

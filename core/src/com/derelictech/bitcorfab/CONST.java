@@ -8,14 +8,16 @@ package com.derelictech.bitcorfab;
  * Description:
  */
 public class CONST {
-    public static final float ASPECT_RATIO = 1.0f/1.0f;
+    private static final float ASPECT_RATIO_W = 4.0f;
+    private static final float ASPECT_RATIO_H = 3.0f;
+    public static final float ASPECT_RATIO = ASPECT_RATIO_H / ASPECT_RATIO_W;
 
     public static final float SCREEN_W = 1024;
-    public static final float SCREEN_H = SCREEN_W / ASPECT_RATIO;
+    public static final float SCREEN_H = SCREEN_W * ASPECT_RATIO;
 
-    public static final float VIEWPORT_W = 120.0f;
-    public static final float VIEWPORT_H = VIEWPORT_W / ASPECT_RATIO;
+    public static final float VIEWPORT_W = 64.0f;
+    public static final float VIEWPORT_H = VIEWPORT_W * ASPECT_RATIO;
 
     public static final float WORLD_W = 64.0f;
-    public static final float WORLD_H = WORLD_W / ASPECT_RATIO;
+    public static final float WORLD_H = WORLD_W * ASPECT_RATIO;
 }

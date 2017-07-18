@@ -9,6 +9,8 @@ public class DesktopLauncher {
 	public static void main (String[] arg) {
         Lwjgl3ApplicationConfiguration config = new Lwjgl3ApplicationConfiguration();
         config.setWindowedMode((int)CONST.SCREEN_W, (int)CONST.SCREEN_H);
+        config.setTitle("bitcorfab");
+        config.setWindowIcon("bitcorfab_icon_16px.png", "bitcorfab_icon_64px.png", "bitcorfab_icon_256px.png");
 		new Lwjgl3Application(new BitCorFab(), config);
 	}
 }
