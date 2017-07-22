@@ -1,4 +1,4 @@
-package com.derelictech.bitcorfab;
+package com.derelictech.bitcorfab.ui;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
@@ -15,7 +15,7 @@ import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
  * Package: com.derelictech.bitcorfab
  * Author:  voxelv
  * Creation Date: 2017-07-21
- * Description:
+ * Description: a button that can be clicked
  */
 public class VoxButton extends Actor {
     TextureRegion buttonUp;
@@ -51,9 +51,12 @@ public class VoxButton extends Actor {
 
     @Override
     public void draw(Batch batch, float parentAlpha) {
+        Color tmp_color = batch.getColor();
         batch.setColor(Color.RED);
+
         batch.draw(pressed ? buttonDown : buttonUp, getX(), getY(), getOriginX(), getOriginY(), getWidth(), getHeight(),
                    getScaleX(), getScaleY(), getRotation());
-        Gdx.app.debug("BTN", "DRAW VoxButton");
+
+        batch.setColor(tmp_color);
     }
 }
