@@ -19,29 +19,18 @@ import java.util.HashMap;
 public class VoxScalingText extends Actor {
     String text;
 
-    int idealPx;
     int currentPx;
-
-    float xscl;
-    float yscl;
+    float currentFontXScale;
+    float currentFontYScale;
 
     HashMap<Integer, Float> layoutWidths;
     HashMap<Integer, Float> layoutHeights;
 
-    public VoxScalingText(String displayText, int preferedFontSize) {
+    public VoxScalingText(String displayText) {
         layoutWidths = new HashMap<Integer, Float>(VoxAssets.voxelv_freemono_font_sizes.length);
         layoutHeights = new HashMap<Integer, Float>(VoxAssets.voxelv_freemono_font_sizes.length);
         // Start with the first size in the list of available sizes
-        idealPx = VoxAssets.voxelv_freemono_font_sizes[0];
-
-        // Loop to find the nearest one
-        for(int size : VoxAssets.voxelv_freemono_font_sizes) {
-            // If the difference between the sizes is smaller than any previous, set the nearest to that size
-            if(Math.abs(preferedFontSize - size) < Math.abs(preferedFontSize - idealPx)) {
-                idealPx = size;
-            }
-        }
-        currentPx = idealPx;
+        currentPx = VoxAssets.voxelv_freemono_font_sizes[0];
 
         text = displayText;
 
@@ -63,26 +52,31 @@ public class VoxScalingText extends Actor {
     }
 
     private void setupFont() {
-        xscl = Gdx.graphics.getWidth() / CONST.SCREEN_W;
-        yscl = Gdx.graphics.getHeight() / CONST.SCREEN_H;
+        float xscl = Gdx.graphics.getWidth() / CONST.SCREEN_W;
+        float yscl = Gdx.graphics.getHeight() / CONST.SCREEN_H;
 
         int maxWPx = VoxAssets.voxelv_freemono_font_sizes[0];
         for(Integer i : VoxAssets.voxelv_freemono_font_sizes) {
+            maxWPx = i;
             if(layoutWidths.get(i) > (getWidth() * xscl)) {
                 break;
             }
-            maxWPx = i;
         }
 
         int maxHPx = VoxAssets.voxelv_freemono_font_sizes[0];
         for(Integer i : VoxAssets.voxelv_freemono_font_sizes) {
+            maxHPx = i;
             if(layoutHeights.get(i) > (getHeight() * yscl)) {
                 break;
             }
-            maxHPx = i;
         }
 
         currentPx = (maxWPx < maxHPx) ? maxWPx : maxHPx;
+        float fontXScale = getWidth()/layoutWidths.get(currentPx);
+        float fontYScale = getHeight()/layoutHeights.get(currentPx);
+
+        currentFontXScale = fontXScale < (1.0f / xscl) ? fontXScale : (1.0f / xscl);
+        currentFontYScale = fontYScale < (1.0f / yscl) ? fontYScale : (1.0f / yscl);
     }
 
     public void setText(String text) {
@@ -99,8 +93,7 @@ public class VoxScalingText extends Actor {
     public void draw(Batch batch, float parentAlpha) {
         setupFont();
         BitmapFont font = VoxAssets.getVoxelvFreemonoFont(currentPx);
-        font.getData().setScale(1.0f / xscl, 1.0f / yscl);
+        font.getData().setScale(currentFontXScale, currentFontYScale);
         font.draw(batch, text, getX(), getY() + getHeight());
-        font.getData().setScale(1.0f);
     }
 }

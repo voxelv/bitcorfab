@@ -46,7 +46,7 @@ public class Screen1 extends ScreenAdapter {
         Image bg_rect = new Image(new Texture("bg_rect.png"));
         uiStage.addActor(bg_rect);
 
-        VoxScalingText hi = new VoxScalingText("Hello World", 16);
+        VoxScalingText hi = new VoxScalingText("Hello World");
         hi.setBounds(30, 30, 200, 50);
         Table uiStageTable = new Table();
         uiStageTable.setFillParent(true);
