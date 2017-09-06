@@ -7,6 +7,8 @@ import com.badlogic.gdx.graphics.g2d.GlyphLayout;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.derelictech.bitcorfab.CONST;
 
+import java.util.HashMap;
+
 /**
  * Project: bitcorfab
  * Package: com.derelictech.bitcorfab.ui
@@ -15,34 +17,77 @@ import com.derelictech.bitcorfab.CONST;
  * Description:
  */
 public class VoxScalingText extends Actor {
-    GlyphLayout layout;
-    BitmapFont font;
     String text;
-    float lineHeight;
-    float prev_w = CONST.SCREEN_W;
-    float prev_h = CONST.SCREEN_H;
+
+    int idealPx;
+    int currentPx;
+
+    float xscl;
+    float yscl;
+
+    HashMap<Integer, Float> layoutWidths;
+    HashMap<Integer, Float> layoutHeights;
 
     public VoxScalingText(String displayText, int preferedFontSize) {
+        layoutWidths = new HashMap<Integer, Float>(VoxAssets.voxelv_freemono_font_sizes.length);
+        layoutHeights = new HashMap<Integer, Float>(VoxAssets.voxelv_freemono_font_sizes.length);
         // Start with the first size in the list of available sizes
-        int nearest_size = VoxAssets.voxelv_freemono_font_sizes[0];
+        idealPx = VoxAssets.voxelv_freemono_font_sizes[0];
 
         // Loop to find the nearest one
         for(int size : VoxAssets.voxelv_freemono_font_sizes) {
             // If the difference between the sizes is smaller than any previous, set the nearest to that size
-            if(Math.abs(preferedFontSize - size) < Math.abs(preferedFontSize - nearest_size)) {
-                nearest_size = size;
+            if(Math.abs(preferedFontSize - size) < Math.abs(preferedFontSize - idealPx)) {
+                idealPx = size;
             }
         }
+        currentPx = idealPx;
 
-        // Get the font closest to the preferedSize
-        font = VoxAssets.getVoxelvFreemonoFont(nearest_size);
         text = displayText;
 
-        layout = new GlyphLayout();
-        layout.setText(font, text); // TODO: Use layout to figure out how big it will draw and do something about the size or something
+        setupLayouts();
+    }
+
+    private void setupLayouts() {
+        BitmapFont font;
+        GlyphLayout layout = new GlyphLayout();
+
+        layoutWidths.clear();
+        layoutHeights.clear();
+        for(Integer i : VoxAssets.voxelv_freemono_font_sizes) {
+            font = VoxAssets.getVoxelvFreemonoFont(i);
+            layout.setText(VoxAssets.getVoxelvFreemonoFont(i), text);
+            layoutWidths.put(i, layout.width);
+            layoutHeights.put(i, font.getCapHeight() - font.getDescent());
+        }
     }
 
     private void setupFont() {
+        xscl = Gdx.graphics.getWidth() / CONST.SCREEN_W;
+        yscl = Gdx.graphics.getHeight() / CONST.SCREEN_H;
+
+        int maxWPx = VoxAssets.voxelv_freemono_font_sizes[0];
+        for(Integer i : VoxAssets.voxelv_freemono_font_sizes) {
+            if(layoutWidths.get(i) > (getWidth() * xscl)) {
+                break;
+            }
+            maxWPx = i;
+        }
+
+        int maxHPx = VoxAssets.voxelv_freemono_font_sizes[0];
+        for(Integer i : VoxAssets.voxelv_freemono_font_sizes) {
+            if(layoutHeights.get(i) > (getHeight() * yscl)) {
+                break;
+            }
+            maxHPx = i;
+        }
+
+        currentPx = (maxWPx < maxHPx) ? maxWPx : maxHPx;
+    }
+
+    public void setText(String text) {
+        this.text = text;
+        setupLayouts();
     }
 
     @Override
@@ -53,10 +98,9 @@ public class VoxScalingText extends Actor {
     @Override
     public void draw(Batch batch, float parentAlpha) {
         setupFont();
+        BitmapFont font = VoxAssets.getVoxelvFreemonoFont(currentPx);
+        font.getData().setScale(1.0f / xscl, 1.0f / yscl);
         font.draw(batch, text, getX(), getY() + getHeight());
-    }
-
-    private float distSqr(float x1, float y1, float x2, float y2) {
-        return (x1 - x2) * (x1 - x2) + (y1 - y2) * (y1 - y2);
+        font.getData().setScale(1.0f);
     }
 }

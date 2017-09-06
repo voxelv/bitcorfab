@@ -12,6 +12,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.utils.viewport.ExtendViewport;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
+import com.badlogic.gdx.utils.viewport.StretchViewport;
 import com.derelictech.bitcorfab.ui.VoxButton;
 import com.derelictech.bitcorfab.ui.VoxScalingText;
 
@@ -29,7 +30,7 @@ public class Screen1 extends ScreenAdapter {
 
     public Screen1() {
         stage = new Stage( new FitViewport(CONST.WORLD_W, CONST.WORLD_H, new OrthographicCamera()));
-        uiStage = new Stage( new ScreenViewport(new OrthographicCamera()));
+        uiStage = new Stage( new StretchViewport(CONST.SCREEN_W, CONST.SCREEN_H));
 
         Gdx.input.setInputProcessor(new InputMultiplexer(uiStage, stage));
 
@@ -73,7 +74,8 @@ public class Screen1 extends ScreenAdapter {
     public void resize(int width, int height) {
         stage.getViewport().update(width, height);
         uiStage.getViewport().update(width, height);
-        uiStage.getCamera().position.set(width / 2.0f, height / 2.0f, 1.0f);
+//        uiStage.getCamera().position.set(width / 2.0f, height / 2.0f, 1.0f);
+
 //        debugGraphicsCalls();
     }
 
