@@ -6,6 +6,7 @@ import com.badlogic.gdx.ScreenAdapter;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.Touchable;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.utils.viewport.ExtendViewport;
@@ -31,6 +32,10 @@ public class Screen1 extends ScreenAdapter {
         uiStage = new Stage( new ScreenViewport(new OrthographicCamera()));
 
         Gdx.input.setInputProcessor(new InputMultiplexer(uiStage, stage));
+
+        Image bg_rect2 = new Image(new Texture("bg_rect.png"));
+        bg_rect2.setSize(CONST.WORLD_W, CONST.WORLD_H);
+        stage.addActor(bg_rect2);
 
         button1 = new VoxButton("buttons/button_style1.png","buttons/button_style1_down.png");
         button1.setPosition(20, 20);
