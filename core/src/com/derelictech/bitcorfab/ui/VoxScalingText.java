@@ -52,31 +52,25 @@ public class VoxScalingText extends Actor {
     }
 
     private void setupFont() {
-        float xscl = Gdx.graphics.getWidth() / CONST.SCREEN_W;
-        float yscl = Gdx.graphics.getHeight() / CONST.SCREEN_H;
+        currentFontXScale = CONST.SCREEN_W / Gdx.graphics.getWidth();
+        currentFontYScale = CONST.SCREEN_H / Gdx.graphics.getHeight();
 
         int maxWPx = VoxAssets.voxelv_freemono_font_sizes[0];
         for(Integer i : VoxAssets.voxelv_freemono_font_sizes) {
-            maxWPx = i;
-            if(layoutWidths.get(i) > (getWidth() * xscl)) {
+            if(layoutWidths.get(i) > (getWidth() / currentFontXScale)) {
                 break;
             }
+            maxWPx = i;
         }
 
         int maxHPx = VoxAssets.voxelv_freemono_font_sizes[0];
         for(Integer i : VoxAssets.voxelv_freemono_font_sizes) {
-            maxHPx = i;
-            if(layoutHeights.get(i) > (getHeight() * yscl)) {
+            if(layoutHeights.get(i) > ((getHeight() - VoxAssets.getVoxelvFreemonoFont(i).getAscent()) / currentFontYScale)) {
                 break;
             }
+            maxHPx = i;
         }
-
         currentPx = (maxWPx < maxHPx) ? maxWPx : maxHPx;
-        float fontXScale = getWidth()/layoutWidths.get(currentPx);
-        float fontYScale = getHeight()/layoutHeights.get(currentPx);
-
-        currentFontXScale = fontXScale < (1.0f / xscl) ? fontXScale : (1.0f / xscl);
-        currentFontYScale = fontYScale < (1.0f / yscl) ? fontYScale : (1.0f / yscl);
     }
 
     public void setText(String text) {
@@ -93,7 +87,11 @@ public class VoxScalingText extends Actor {
     public void draw(Batch batch, float parentAlpha) {
         setupFont();
         BitmapFont font = VoxAssets.getVoxelvFreemonoFont(currentPx);
+
+        float drawX = getX() + getWidth() / 2.0f - layoutWidths.get(currentPx) * currentFontXScale / 2.0f;
+        float drawY = getY() + (layoutHeights.get(currentPx)) * currentFontYScale / 2.0f;
         font.getData().setScale(currentFontXScale, currentFontYScale);
-        font.draw(batch, text, getX(), getY() + getHeight());
+        font.draw(batch, text, drawX, drawY + getHeight() / 2.0f);
+        Gdx.app.debug("VST", "" + currentPx );
     }
 }

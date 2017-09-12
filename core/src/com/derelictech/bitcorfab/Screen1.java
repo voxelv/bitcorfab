@@ -8,6 +8,7 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.Touchable;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
+import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.utils.viewport.ExtendViewport;
 import com.badlogic.gdx.utils.viewport.FitViewport;
@@ -46,16 +47,47 @@ public class Screen1 extends ScreenAdapter {
         Image bg_rect = new Image(new Texture("bg_rect.png"));
         uiStage.addActor(bg_rect);
 
-        VoxScalingText hi = new VoxScalingText("Hello World");
-        hi.setBounds(30, 30, 200, 50);
+        float w = 700;
+        float h = 200;
+
+        VoxScalingText hi1 = new VoxScalingText("ÄyABCDEFGHI");
+        hi1.setWidth(w);
+        hi1.setHeight(h);
+        Table hi1table = new Table();
+        hi1table.debug();
+        hi1table.addActor(hi1);
+
+        VoxScalingText hi2 = new VoxScalingText("JKLMNOPQRST");
+        hi2.setWidth(w);
+        hi2.setHeight(h);
+        Table hi2table = new Table();
+        hi2table.debug();
+        hi2table.addActor(hi2);
+        hi2table.setPosition(0, h);
+
+        VoxScalingText hi3 = new VoxScalingText("UVWXYZ");
+        hi3.setWidth(w);
+        hi3.setHeight(h);
+        Table hi3table = new Table();
+        hi3table.debug();
+        hi3table.addActor(hi3);
+        hi3table.setPosition(0, h * 2.0f);
+
         Table uiStageTable = new Table();
         uiStageTable.setFillParent(true);
 
-        uiStageTable.bottom().left();
-        uiStageTable.addActor(hi);
+        uiStageTable.addActor(hi1table);
+        uiStageTable.row();
+        uiStageTable.addActor(hi2table);
+        uiStageTable.row();
+        uiStageTable.addActor(hi3table);
+        uiStageTable.row();
         uiStage.addActor(uiStageTable);
 
         uiStage.setDebugAll(true);
+        hi1table.setDebug(true);
+        hi2table.setDebug(true);
+        hi3table.setDebug(true);
 //        debugGraphicsCalls();
     }
 

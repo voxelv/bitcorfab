@@ -18,7 +18,7 @@ char id=59      x=261  y=948  width=33   height=75   xoffset=18   yoffset=54   x
 char id=65      x=294  y=948  width=80   height=75   xoffset=2    yoffset=35   xadvance=84   page=0    chnl=0 
 char id=66      x=374  y=948  width=70   height=75   xoffset=6    yoffset=35   xadvance=84   page=0    chnl=0 
 char id=68      x=444  y=948  width=67   height=75   xoffset=6    yoffset=35   xadvance=84   page=0    chnl=0 
-char id=69      x=0    y=1049 width=67   height=75   xoffset=6    yoffset=35   xadvance=84   page=0    chnl=0 
+char id=69      x=213  y=568  width=67   height=75   xoffset=6    yoffset=35   xadvance=84   page=0    chnl=0
 char id=106     x=464  y=0    width=46   height=106  xoffset=19   yoffset=28   xadvance=84   page=0    chnl=0 
 char id=124     x=489  y=746  width=11   height=96   xoffset=36   yoffset=30   xadvance=84   page=0    chnl=0 
 char id=160     x=0    y=0    width=0    height=0    xoffset=-1   yoffset=0    xadvance=84   page=0    chnl=0 
