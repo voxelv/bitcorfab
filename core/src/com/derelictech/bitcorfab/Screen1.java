@@ -33,6 +33,9 @@ public class Screen1 extends ScreenAdapter {
         stage = new Stage( new FitViewport(CONST.WORLD_W, CONST.WORLD_H, new OrthographicCamera()));
         uiStage = new Stage( new StretchViewport(CONST.SCREEN_W, CONST.SCREEN_H));
 
+        Table uiStageTable = new Table();
+        uiStageTable.setFillParent(true);
+
         Gdx.input.setInputProcessor(new InputMultiplexer(uiStage, stage));
 
         Image bg_rect2 = new Image(new Texture("bg_rect.png"));
@@ -47,47 +50,22 @@ public class Screen1 extends ScreenAdapter {
         Image bg_rect = new Image(new Texture("bg_rect.png"));
         uiStage.addActor(bg_rect);
 
-        float w = 300;
-        float h = 75;
+        float w = 700;
+        float h = 250;
 
-        VoxScalingText test1 = new VoxScalingText("THEQUICKBROWN");
+        VoxScalingText test1 = new VoxScalingText(
+                "ABCDEFGHIJKLMNOPQRSTUVWXYZ\nabcdefghijklmnopqrstuvwxyz\n`1234567890-=~!@#$%^&*()_+\n[]\\;',./{}|:\"<>?ΦΞ");
         test1.setWidth(w);
         test1.setHeight(h);
         Table test1table = new Table();
-        test1table.debug();
         test1table.addActor(test1);
 
-        VoxScalingText test2 = new VoxScalingText("FOXJUMPSOVER");
-        test2.setWidth(w);
-        test2.setHeight(h);
-        Table test2table = new Table();
-        test2table.debug();
-        test2table.addActor(test2);
-        test2table.setPosition(0, h);
-
-        VoxScalingText test3 = new VoxScalingText("THELAZYDOG");
-        test3.setWidth(w);
-        test3.setHeight(h);
-        Table test3table = new Table();
-        test3table.debug();
-        test3table.addActor(test3);
-        test3table.setPosition(0, h * 2.0f);
-
-        Table uiStageTable = new Table();
-        uiStageTable.setFillParent(true);
-
         uiStageTable.addActor(test1table);
-        uiStageTable.row();
-        uiStageTable.addActor(test2table);
-        uiStageTable.row();
-        uiStageTable.addActor(test3table);
         uiStageTable.row();
         uiStage.addActor(uiStageTable);
 
         uiStage.setDebugAll(true);
         test1table.setDebug(true);
-        test2table.setDebug(true);
-        test3table.setDebug(true);
 //        debugGraphicsCalls();
     }
 
