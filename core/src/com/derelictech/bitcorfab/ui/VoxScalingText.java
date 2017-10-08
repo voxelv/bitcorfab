@@ -19,6 +19,7 @@ import java.util.HashMap;
 public class VoxScalingText extends Actor {
     String text;
 
+    int lines;
     int currentPx;
     float currentFontXScale;
     float currentFontYScale;
@@ -35,7 +36,9 @@ public class VoxScalingText extends Actor {
 
         text = displayText;
 
+        calculateLines();
         setupLayouts();
+        setupFont();
     }
 
     private void setupLayouts() {
@@ -53,6 +56,7 @@ public class VoxScalingText extends Actor {
     }
 
     private void setupFont() {
+
         // Determine the latest screen size ratio
         currentFontXScale = CONST.SCREEN_W / Gdx.graphics.getWidth();
         currentFontYScale = CONST.SCREEN_H / Gdx.graphics.getHeight();
@@ -69,7 +73,7 @@ public class VoxScalingText extends Actor {
         // Determine the maximum font size that can fit vertically
         int maxHPx = VoxAssets.voxelv_freemono_font_sizes[0];
         for(Integer i : VoxAssets.voxelv_freemono_font_sizes) {
-            if(layoutHeights.get(i) > ((getHeight() - VoxAssets.getVoxelvFreemonoFont(i).getAscent()) / currentFontYScale)) {
+            if((layoutHeights.get(i) * lines) > ((getHeight() - VoxAssets.getVoxelvFreemonoFont(i).getAscent()) / currentFontYScale)) {
                 break;
             }
             maxHPx = i;
@@ -82,7 +86,17 @@ public class VoxScalingText extends Actor {
     public void setText(String text) {
         // Set the text and redetermine the layout sizes
         this.text = text;
+        calculateLines();
         setupLayouts();
+    }
+
+    private void calculateLines() {
+        lines = 1;
+        for(int i = 0; i < text.length(); i++) {
+            if(text.charAt(i) == '\n') {
+                lines++;
+            }
+        }
     }
 
     @Override
@@ -99,11 +113,11 @@ public class VoxScalingText extends Actor {
         BitmapFont font = VoxAssets.getVoxelvFreemonoFont(currentPx);
 
         // Determine where to draw (CENTERED, TOP)
-        float drawX = getX() + getWidth() / 2.0f - layoutWidths.get(currentPx) * currentFontXScale / 2.0f;
-        float drawY = getY() + getHeight();// + (layoutHeights.get(currentPx)) * currentFontYScale / 2.0f;
+        float drawX = getX() + (getWidth() / 2.0f) - (layoutWidths.get(currentPx) * currentFontXScale / 2.0f);
+        float drawY = getY() + (getHeight());// - ((layoutHeights.get(currentPx) * lines) / 2.0f);
 
         // Scale appropriately and draw
         font.getData().setScale(currentFontXScale, currentFontYScale);
-        font.draw(batch, text, drawX, drawY + getHeight() / 2.0f);
+        font.draw(batch, text, drawX, drawY);
     }
 }

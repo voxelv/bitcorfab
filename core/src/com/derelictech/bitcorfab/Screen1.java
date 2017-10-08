@@ -54,7 +54,7 @@ public class Screen1 extends ScreenAdapter {
         float h = 250;
 
         VoxScalingText test1 = new VoxScalingText(
-                "ABCDEFGHIJKLMNOPQRSTUVWXYZ\nabcdefghijklmnopqrstuvwxyz\n`1234567890-=~!@#$%^&*()_+\n[]\\;',./{}|:\"<>?ΦΞ");
+                "ABCDEFGHIJKLMNOPQRSTUVWXYZ\nabcdefghijklmnopqrstuvwxyz\n`1234567890-=~!@#$%^&*()_+\n[]\\;',./{}|:\"<>?ΦΞgypt");
         test1.setWidth(w);
         test1.setHeight(h);
         Table test1table = new Table();
