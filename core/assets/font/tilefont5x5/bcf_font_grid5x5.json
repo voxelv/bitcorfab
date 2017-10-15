@@ -1,0 +1,12 @@
+{
+  "class": com.derelictech.bitcorfab.prototyping.tiler.BCFTiler,
+  "filename": "bcf_font_grid5x5.png",
+  "sets": [
+    {"name":        "uc", "startX": 1, "startY":  1, "width": 5, "height": 11, "xPad": 1, "yPad": 1, "numChars": 26},
+    {"name":        "lc", "startX": 1, "startY": 13, "width": 5, "height": 11, "xPad": 1, "yPad": 1, "numChars": 26},
+    {"name": "digits_uc", "startX": 1, "startY": 73, "width": 5, "height": 11, "xPad": 1, "yPad": 1, "numChars": 10},
+    {"name": "digits_lc", "startX": 1, "startY": 85, "width": 5, "height":  5, "xPad": 1, "yPad": 1, "numChars": 10},
+    {"name":  "greek_uc", "startX": 1, "startY": 37, "width": 5, "height": 11, "xPad": 1, "yPad": 1, "numChars": 26},
+    {"name":  "greek_lc", "startX": 1, "startY": 49, "width": 5, "height": 11, "xPad": 1, "yPad": 1, "numChars": 26}
+  ]
+}

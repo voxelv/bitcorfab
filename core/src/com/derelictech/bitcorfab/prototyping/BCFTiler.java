@@ -1,8 +1,12 @@
 package com.derelictech.bitcorfab.prototyping;
 
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.GridPoint2;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 /**
@@ -13,47 +17,69 @@ import java.util.List;
  * Description: Manages texture regions for a custom font. Monospace only.
  */
 public class BCFTiler {
-    public static final List<Character> uppercase = new ArrayList<Character>();
-    public static final List<Character> lowercase = new ArrayList<Character>();
-    public static final List<Character> digits = new ArrayList<Character>();
-    static {
-        char[] uppercaseChars = {'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z'};
-        char[] lowercaseChars = {'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z'};
-        char[] digitChars = {'0', '1', '2', '3', '4', '5', '6', '7', '8', '9'};
-        for(char uppercaseChar : uppercaseChars) {
-            uppercase.add(uppercaseChar);
-        }
-        for(char lowercaseChar : lowercaseChars) {
-            lowercase.add(lowercaseChar);
-        }
-        for(char digitChar : digitChars) {
-            digits.add(digitChar);
-        }
-    }
 
-    public class BCFTilerConfig {
+    private Texture texture;
+    private BCFTilerConfig config;
+    private HashMap<String, HashMap<Integer, TextureRegion>> sets;
 
-        abstract class BCFTileSet {}
+    public static class BCFTilerConfig {
+
+        public static abstract class BCFTileSet {
+            public String setName;
+            public BCFTileSet(String setName) {
+                this.setName = setName;
+            }
+
+            public abstract HashMap<Integer, TextureRegion> genRegions(Texture texture);
+            public abstract boolean isCharacterSet();
+        }
 
         List<BCFTileSet> sets;
 
-        public class BCFCharacterSet extends BCFTileSet {
+        public static class BCFCharacterSet extends BCFTileSet {
 
             GridPoint2 start;       // Top Left pixel of the set start
             int xPad;               // Horizontal padding (usually 1 pixel)
+            int width;              // Width of each character
             int height;             // Height of this set
-            List<Character> chars; // Character array, Note: This also determines how many characters
-                                    // are in the set.
+            List<Character> chars;  // Character array, Note: This also determines how many characters are in the set.
 
-            public BCFCharacterSet(GridPoint2 start, int xPad, int height, List<Character> chars) {
+            public BCFCharacterSet(String setName, GridPoint2 start, int xPad, int width, int height, List<Character> chars) {
+                super(setName);
                 this.start = new GridPoint2(start);
                 this.xPad = xPad;
                 this.height = height;
                 this.chars = new ArrayList<Character>(chars);
             }
+
+            @Override
+            public HashMap<Integer, TextureRegion> genRegions(Texture texture) {
+                HashMap<Integer, TextureRegion> regions = new HashMap<Integer, TextureRegion>();
+
+                TextureRegion setRegion = new TextureRegion(texture, this.start.x, this.start.y, this.chars.size() * (this.width + this.xPad), this.height);
+
+                TextureRegion[][] splitRegions = setRegion.split((this.width + this.xPad), this.height);
+
+                int idx = 0;
+                for(TextureRegion tr : splitRegions[0]) {
+                    // Trim the padding off
+                    tr.setRegionWidth(this.width);
+                    tr.setRegionHeight(this.height);
+
+                    // Add to the hashmap
+                    regions.put(idx++, tr);
+                }
+
+                return regions;
+            }
+
+            @Override
+            public boolean isCharacterSet() {
+                return true;
+            }
         }
 
-        public class BCFEdgeBorderSet extends BCFTileSet {
+        public static class BCFEdgeBorderSet extends BCFTileSet {
             /**
              * An Edge Border Set is a 4x4 grid where the connections to each side is enumerated.
              * The column determines the Right and Top side connections:     ____ ___R __T_ __TR
@@ -70,15 +96,27 @@ public class BCFTiler {
             int yPad;           // Vertical padding (usually 1 pixel)
             int height;         // Height of this set
 
-            public BCFEdgeBorderSet(GridPoint2 start, int xPad, int yPad, int height) {
+            public BCFEdgeBorderSet(String setName, GridPoint2 start, int xPad, int yPad, int height) {
+                super(setName);
                 this.start = new GridPoint2(start);
                 this.xPad = xPad;
                 this.yPad = yPad;
                 this.height = height;
             }
+
+            @Override
+            public HashMap<Integer, TextureRegion> genRegions(Texture texture) {
+                //TODO
+                return null;
+            }
+
+            @Override
+            public boolean isCharacterSet() {
+                return false;
+            }
         }
 
-        public class BCFFillBorderSet extends BCFTileSet{
+        public static class BCFFillBorderSet extends BCFTileSet{
             /**
              * A Fill Border Set is a 4x4 grid where the connections to each side is enumerated.
              * There is less intuition for a fill border set. Basically if there's a corner,
@@ -98,11 +136,23 @@ public class BCFTiler {
             int yPad;           // Vertical padding (usually 1 pixel)
             int height;         // Height of this set
 
-            public BCFFillBorderSet(GridPoint2 start, int xPad, int yPad, int height) {
+            public BCFFillBorderSet(String setName, GridPoint2 start, int xPad, int yPad, int height) {
+                super(setName);
                 this.start = new GridPoint2(start);
                 this.xPad = xPad;
                 this.yPad = yPad;
                 this.height = height;
+            }
+
+            @Override
+            public HashMap<Integer, TextureRegion> genRegions(Texture texture) {
+                //TODO
+                return null;
+            }
+
+            @Override
+            public boolean isCharacterSet() {
+                return false;
             }
         }
 
@@ -113,10 +163,22 @@ public class BCFTiler {
     }
 
     public BCFTiler(String internalPath, BCFTilerConfig config) {
+        this.texture = new Texture(Gdx.files.internal(internalPath));
+        this.config = config;
+        this.sets = new HashMap<String, HashMap<Integer, TextureRegion>>();
+
         setupTiles();
     }
 
     private void setupTiles() {
-        // TODO: Finish
+        for(BCFTilerConfig.BCFTileSet tileSet : config.sets) {
+            sets.put(tileSet.setName, tileSet.genRegions(texture));
+        }
+    }
+
+    public TextureRegion getRegion(String setName, int id) {
+        return sets.get(setName).get(id);
     }
 }
+
+
