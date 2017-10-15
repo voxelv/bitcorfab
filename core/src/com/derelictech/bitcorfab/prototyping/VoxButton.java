@@ -1,4 +1,4 @@
-package com.derelictech.bitcorfab.ui;
+package com.derelictech.bitcorfab.prototyping;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;

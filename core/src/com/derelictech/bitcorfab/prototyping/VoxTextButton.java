@@ -1,4 +1,4 @@
-package com.derelictech.bitcorfab.ui;
+package com.derelictech.bitcorfab.prototyping;
 
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.Batch;
@@ -6,7 +6,7 @@ import com.badlogic.gdx.graphics.g2d.BitmapFont;
 
 /**
  * Project: bitcorfab
- * Package: com.derelictech.bitcorfab.ui
+ * Package: com.derelictech.bitcorfab.prototyping
  * Author:  voxelv
  * Creation Date: 2017-07-22
  * Description:

@@ -15,6 +15,9 @@ public class CONST {
     public static final float SCREEN_W = 1024;
     public static final float SCREEN_H = SCREEN_W * ASPECT_RATIO;
 
-    public static final float WORLD_W = 64.0f;
+    public static final float WORLD_W = 16.0f;
     public static final float WORLD_H = WORLD_W * ASPECT_RATIO;
+
+    public static final int GRID_CHUNK_N = 64;
+    public static final float GRID_PITCH = 1.05f;
 }

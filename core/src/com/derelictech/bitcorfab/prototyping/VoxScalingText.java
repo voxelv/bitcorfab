@@ -1,4 +1,4 @@
-package com.derelictech.bitcorfab.ui;
+package com.derelictech.bitcorfab.prototyping;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.Batch;
@@ -11,7 +11,7 @@ import java.util.HashMap;
 
 /**
  * Project: bitcorfab
- * Package: com.derelictech.bitcorfab.ui
+ * Package: com.derelictech.bitcorfab.prototyping
  * Author:  voxelv
  * Creation Date: 2017-07-22
  * Description:
@@ -119,5 +119,9 @@ public class VoxScalingText extends Actor {
         // Scale appropriately and draw
         font.getData().setScale(currentFontXScale, currentFontYScale);
         font.draw(batch, text, drawX, drawY);
+    }
+
+    public String getTestString() {
+        return "ABCDEFGHIJKLMNOPQRSTUVWXYZ\nabcdefghijklmnopqrstuvwxyz\n`1234567890-=~!@#$%^&*()_+\n[]\\;',./{}|:\"<>?ΦΞgypt";
     }
 }

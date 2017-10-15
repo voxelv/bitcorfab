@@ -1,19 +1,16 @@
 package com.derelictech.bitcorfab;
 
 import com.badlogic.gdx.Application;
-import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL20;
-import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
 public class BitCorFab extends Game {
 
     @Override
     public void create () {
         Gdx.app.setLogLevel(Application.LOG_DEBUG);
-        setScreen(new Screen1());
+        setScreen(new GameScreen(this));
     }
 
     @Override
