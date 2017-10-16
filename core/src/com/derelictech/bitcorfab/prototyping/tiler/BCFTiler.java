@@ -1,6 +1,7 @@
 package com.derelictech.bitcorfab.prototyping.tiler;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 /**
  * Project: bitcorfab
@@ -10,6 +11,6 @@ import java.util.ArrayList;
  * Description:
  */
 public class BCFTiler {
-    public String filename;
-    public ArrayList sets;
+    public String texturefile;
+    public HashMap sets;
 }

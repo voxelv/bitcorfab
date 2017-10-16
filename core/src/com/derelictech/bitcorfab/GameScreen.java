@@ -75,16 +75,19 @@ public class GameScreen extends BCFScreenAdapter {
         json.setElementType(BCFTiler.class, "sets", BCFTileSet.class);
         BCFTiler tiler = json.fromJson(BCFTiler.class, Gdx.files.internal("font/tilefont5x5/bcf_font_grid5x5.json"));
 
-        int startX = 1;
-        int startY = 25;
-        int width = 5;
-        int height = 5;
-        int xPad = 1;
-        int yPad = 1;
+        BCFTileSet tileset = (BCFTileSet)tiler.sets.get("lc");
+
+        int startX = tileset.startX;
+        int startY = tileset.startY;
+        int width = tileset.width;
+        int height = tileset.height;
+        int xPad = tileset.xPad;
+        int yPad = tileset.yPad;
+        int numChars = tileset.numChars;
+
         float drawAtX = 0.0f;
         float drawAtY = 0.0f;
         float scale = 0.9f;
-        int numChars = 26;
 
         TextureRegion upper = new TextureRegion(
                 new Texture(Gdx.files.internal("font/tilefont5x5/bcf_font_grid5x5.png")),
