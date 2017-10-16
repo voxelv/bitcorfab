@@ -2,17 +2,13 @@ package com.derelictech.bitcorfab;
 
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
-import com.badlogic.gdx.math.GridPoint2;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.utils.Json;
-import com.badlogic.gdx.utils.Scaling;
 import com.derelictech.bitcorfab.prototyping.tiler.BCFTiler;
-import com.derelictech.bitcorfab.prototyping.tiler.BCFTileSet;
-
-import java.util.ArrayList;
+import com.derelictech.bitcorfab.prototyping.tiler.BCFTilerJsonData;
+import com.derelictech.bitcorfab.prototyping.tiler.BCFTileSetJsonData;
 
 /**
  * Project: bitcorfab
@@ -50,32 +46,13 @@ public class GameScreen extends BCFScreenAdapter {
         grid.set(4, 4, grid_item_xi);
         grid.set(3, 4, grid_item_xi);
 
-/**        root.addActor(grid);*/
-
-//        ArrayList<BCFTiler.BCFTilerConfig.BCFTileSet> sets = new ArrayList<BCFTiler.BCFTilerConfig.BCFTileSet>();
-//
-//        BCFTiler.BCFTilerConfig.BCFCharacterSet uppercase = new BCFTiler.BCFTilerConfig.BCFCharacterSet(
-//                "upper",
-//                new GridPoint2(1, 1),
-//                1,
-//                5,
-//                9,
-//                CONST.uppercase
-//        );
-//        sets.add(uppercase);
-//
-//        BCFTiler.BCFTilerConfig tilerConfig= new BCFTiler.BCFTilerConfig(sets);
-//        BCFTiler tiler = new BCFTiler("font/tilefont5x5/bcf_font_grid5x5.png", tilerConfig);
-//
-//        Image img = new Image(tiler.getRegion("upper", 0));
-//        img.setSize(5f, 9f);
-//        img.setPosition(0, 0);
+//        root.addActor(grid);
 
         Json json = new Json();
-        json.setElementType(BCFTiler.class, "sets", BCFTileSet.class);
-        BCFTiler tiler = json.fromJson(BCFTiler.class, Gdx.files.internal("font/tilefont5x5/bcf_font_grid5x5.json"));
+        json.setElementType(BCFTilerJsonData.class, "sets", BCFTileSetJsonData.class);
+        BCFTilerJsonData tiler = json.fromJson(BCFTilerJsonData.class, Gdx.files.internal("font/tilefont5x5/bcf_font_grid5x5.json"));
 
-        BCFTileSet tileset = (BCFTileSet)tiler.sets.get("lc");
+        BCFTileSetJsonData tileset = (BCFTileSetJsonData)tiler.sets.get("lc");
 
         int startX = tileset.startX;
         int startY = tileset.startY;
@@ -83,7 +60,7 @@ public class GameScreen extends BCFScreenAdapter {
         int height = tileset.height;
         int xPad = tileset.xPad;
         int yPad = tileset.yPad;
-        int numChars = tileset.numChars;
+        int numChars = tileset.cols;
 
         float drawAtX = 0.0f;
         float drawAtY = 0.0f;
@@ -104,8 +81,19 @@ public class GameScreen extends BCFScreenAdapter {
             Image i = new Image(tr);
             i.setPosition(drawAtX + (idx * width * scale), drawAtY);
             i.setSize((float)width * scale, (float)height * scale);
-            root.addActor(i);
+//            root.addActor(i);
             idx++;
+        }
+
+        BCFTiler testTiler = new BCFTiler("font/tilefont5x5/bcf_font_grid5x5.json");
+
+        int idx2 = 0;
+        for(TextureRegion tr : testTiler.regionsFromString("Hello World! Happy Egypt?")) {
+            Image i = new Image(tr);
+            i.setPosition(drawAtX + (idx2 * width * scale), drawAtY);
+            i.setSize((float)width * scale, (float)height * scale);
+            root.addActor(i);
+            idx2++;
         }
     }
 

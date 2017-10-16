@@ -56,7 +56,7 @@ public class BCFGrid<T> extends Group{
             if (obj instanceof Actor && !getChildren().contains((Actor)obj, true)) {
                 Actor a = (Actor)obj;
                 addActor(a);
-                a.setSize(1.0f, 1.0f);
+                a.setSize(8.0f, 8.0f);
                 a.setPosition(point.x * CONST.GRID_PITCH, point.y * CONST.GRID_PITCH);
             }
         }

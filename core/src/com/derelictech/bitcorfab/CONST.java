@@ -22,7 +22,7 @@ public class CONST {
     public static final float WORLD_H = WORLD_W * ASPECT_RATIO;
 
     public static final int GRID_CHUNK_N = 64;
-    public static final float GRID_PITCH = 1.05f;
+    public static final float GRID_PITCH = 8.05f;
 
     public static final List<Character> uppercase = new ArrayList<Character>();
     public static final List<Character> lowercase = new ArrayList<Character>();

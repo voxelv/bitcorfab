@@ -16,7 +16,7 @@ import java.util.List;
  * Creation Date: 2017-10-14
  * Description: Manages texture regions for a custom font. Monospace only.
  */
-public class BCFTiler {
+public class OtherTiler {
 
     private Texture texture;
     private BCFTilerConfig config;
@@ -162,7 +162,7 @@ public class BCFTiler {
         }
     }
 
-    public BCFTiler(String internalPath, BCFTilerConfig config) {
+    public OtherTiler(String internalPath, BCFTilerConfig config) {
         this.texture = new Texture(Gdx.files.internal(internalPath));
         this.config = config;
         this.sets = new HashMap<String, HashMap<Integer, TextureRegion>>();

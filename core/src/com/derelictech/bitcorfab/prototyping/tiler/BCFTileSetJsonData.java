@@ -7,13 +7,15 @@ package com.derelictech.bitcorfab.prototyping.tiler;
  * Creation Date: 2017-10-15
  * Description:
  */
-public class BCFTileSet {
-    public String name;
+public class BCFTileSetJsonData {
     public int startX;
     public int startY;
     public int width;
     public int height;
     public int xPad;
     public int yPad;
-    public int numChars;
+    public int cols;
+    public int rows;
+    public boolean isOnKeyboard;
+    public String characters;
 }
