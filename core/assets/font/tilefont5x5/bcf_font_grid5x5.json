@@ -64,6 +64,24 @@
       "xPad": 1,
       "yPad": 1,
       "numChars": 26
+    },
+    "symbols_uc": {
+      "startX": 67,
+      "startY": 61,
+      "width": 5,
+      "height": 11,
+      "xPad": 1,
+      "yPad": 1,
+      "numChars": 11
+    },
+    "symbols_lc": {
+      "startX": 67,
+      "startY": 73,
+      "width": 5,
+      "height": 11,
+      "xPad": 1,
+      "yPad": 1,
+      "numChars": 11
     }
   }
 }
