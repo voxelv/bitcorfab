@@ -2,7 +2,9 @@ package com.derelictech.bitcorfab.prototyping.tiler;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.utils.Disposable;
 import com.badlogic.gdx.utils.Json;
 
 import java.util.HashMap;
@@ -15,7 +17,8 @@ import java.util.Map;
  * Creation Date: 2017-10-15
  * Description: Manages TextureRegions for a handmade texture atlas (especially for pixel fonts)
  */
-public class BCFTiler {
+public class BCFTiler implements Disposable{
+    private Texture texture;
     private BCFTilerJsonData jsonData;
     private Map<Integer, TextureRegion> idRegions;
     private Map<Character, TextureRegion> characterRegions;
@@ -24,6 +27,8 @@ public class BCFTiler {
         Json json = new Json();
         json.setElementType(BCFTilerJsonData.class, "sets", BCFTileSetJsonData.class);
         jsonData = json.fromJson(BCFTilerJsonData.class, Gdx.files.internal(internalJsonPath));
+
+        texture = new Texture(Gdx.files.internal(jsonData.texturefile));
 
         idRegions = new HashMap<Integer, TextureRegion>();
         characterRegions = new HashMap<Character, TextureRegion>();
@@ -38,7 +43,7 @@ public class BCFTiler {
 
             // Acquire the region with the tileset
             TextureRegion tileset = new TextureRegion(
-                    new Texture(Gdx.files.internal(jsonData.texturefile)),
+                    texture,
                     setData.startX,
                     setData.startY,
                     (setData.width + setData.xPad) * setData.cols,
@@ -76,5 +81,26 @@ public class BCFTiler {
             retArray[i++] = characterRegions.get(c);
         }
         return retArray;
+    }
+
+    /**
+     * Draws a string.
+     * @param batch: The {@link Batch} to draw to
+     * @param string: The string to draw
+     * @param x: x position to draw at
+     * @param y: y position to draw at
+     */
+    public void draw(Batch batch, String string, float x, float y, float scaleX, float scaleY, float rotation) {
+        float xpos = x;
+        for(Character c : string.toCharArray()) {
+            TextureRegion tr = characterRegions.get(c);
+            batch.draw(tr, xpos, y, 0, 0, tr.getRegionWidth(), tr.getRegionHeight(), scaleX, scaleY, rotation);
+            xpos += scaleX * tr.getRegionWidth();
+        }
+    }
+
+    @Override
+    public void dispose() {
+        texture.dispose();
     }
 }

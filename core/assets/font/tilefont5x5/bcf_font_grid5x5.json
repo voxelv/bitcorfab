@@ -1,5 +1,5 @@
 {
-  "class": com.derelictech.bitcorfab.prototyping.tiler.BCFTilerJsonData,
+  "class": "com.derelictech.bitcorfab.prototyping.tiler.BCFTilerJsonData",
   "texturefile": "font/tilefont5x5/bcf_font_grid5x5.png",
   "sets": {
     "uc": {
