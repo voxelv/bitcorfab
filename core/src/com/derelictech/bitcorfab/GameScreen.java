@@ -5,6 +5,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
+import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.Json;
 import com.derelictech.bitcorfab.prototyping.tiler.BCFText;
 import com.derelictech.bitcorfab.prototyping.tiler.BCFTiler;
@@ -97,9 +98,21 @@ public class GameScreen extends BCFScreenAdapter {
 //            idx2++;
 //        }
 
-        BCFText mytext = new BCFText("Hello World! 0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz", tilefont5x5);
+        root.top().left();
+
+        BCFText mytext = new BCFText("Hello World! 0123456789\nABCDEFGHIJKLMNOPQRSTUVWXYZ\nabcdefghijklmnopqrstuvwxyz", tilefont5x5);
         mytext.setScale(0.25f);
-        root.addActor(mytext);
+        root.add(mytext);
+        root.row();
+
+        BCFText bitcorfab = new BCFText("BITCORFAB", tilefont5x5);
+        bitcorfab.setScale(1.25f);
+        root.add(bitcorfab).left();
+        root.row();
+
+        BCFText symbolsTest = new BCFText("!@#$%^&*()`-=[]\\;',./~_+{}|:\"<>?", tilefont5x5);
+        symbolsTest.setScale(0.5f);
+        root.add(symbolsTest).left();
     }
 
 }

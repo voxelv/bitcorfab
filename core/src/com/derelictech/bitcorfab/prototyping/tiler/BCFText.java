@@ -1,6 +1,7 @@
 package com.derelictech.bitcorfab.prototyping.tiler;
 
 import com.badlogic.gdx.graphics.g2d.Batch;
+import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 
 /**
@@ -18,6 +19,13 @@ public class BCFText extends Actor {
         super();
         this.text = text;
         this.tiler = tiler;
+    }
+
+    @Override
+    public void setScale(float scaleXY) {
+        super.setScale(scaleXY);
+        Vector2 size = this.tiler.getDimensions(this.text);
+        this.setSize(size.x * getScaleX(), size.y * getScaleY());
     }
 
     @Override

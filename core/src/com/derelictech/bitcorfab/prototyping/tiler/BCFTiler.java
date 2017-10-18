@@ -4,6 +4,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Disposable;
 import com.badlogic.gdx.utils.Json;
 
@@ -84,6 +85,29 @@ public class BCFTiler implements Disposable{
     }
 
     /**
+     * Get the dimensions of a string after being drawn
+     * @param string
+     * @return
+     */
+    public Vector2 getDimensions(String string) {
+        float w = 0.0f, h = 0.0f;
+        for(Character c : string.toCharArray()) {
+            if(!characterRegions.containsKey(c)) {
+                continue;
+            }
+
+            TextureRegion tr = characterRegions.get(c);
+            w += tr.getRegionWidth();
+
+            float height = tr.getRegionHeight();
+            if(height > h) {
+                h = height;
+            }
+        }
+        return new Vector2(w, h);
+    }
+
+    /**
      * Draws a string.
      * @param batch: The {@link Batch} to draw to
      * @param string: The string to draw
@@ -93,6 +117,9 @@ public class BCFTiler implements Disposable{
     public void draw(Batch batch, String string, float x, float y, float scaleX, float scaleY, float rotation) {
         float xpos = x;
         for(Character c : string.toCharArray()) {
+            if(!characterRegions.containsKey(c)) {
+                continue;
+            }
             TextureRegion tr = characterRegions.get(c);
             batch.draw(tr, xpos, y, 0, 0, tr.getRegionWidth(), tr.getRegionHeight(), scaleX, scaleY, rotation);
             xpos += scaleX * tr.getRegionWidth();
