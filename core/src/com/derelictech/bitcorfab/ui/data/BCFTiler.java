@@ -1,4 +1,4 @@
-package com.derelictech.bitcorfab.prototyping.tiler;
+package com.derelictech.bitcorfab.ui.data;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
@@ -13,7 +13,7 @@ import java.util.Map;
 
 /**
  * Project: bitcorfab
- * Package: com.derelictech.bitcorfab.prototyping.tiler
+ * Package: com.derelictech.bitcorfab.ui.data
  * Author:  voxelv
  * Creation Date: 2017-10-15
  * Description: Manages TextureRegions for a handmade texture atlas (especially for pixel fonts)

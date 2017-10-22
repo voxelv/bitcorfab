@@ -1,12 +1,13 @@
-package com.derelictech.bitcorfab.prototyping.tiler;
+package com.derelictech.bitcorfab.ui;
 
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Actor;
+import com.derelictech.bitcorfab.ui.data.BCFTiler;
 
 /**
  * Project: bitcorfab
- * Package: com.derelictech.bitcorfab.prototyping.tiler
+ * Package: com.derelictech.bitcorfab.ui
  * Author:  voxelv
  * Creation Date: 2017-10-17
  * Description:

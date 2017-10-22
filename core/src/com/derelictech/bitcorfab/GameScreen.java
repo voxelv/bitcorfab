@@ -3,14 +3,9 @@ package com.derelictech.bitcorfab;
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
-import com.badlogic.gdx.utils.Align;
-import com.badlogic.gdx.utils.Json;
-import com.derelictech.bitcorfab.prototyping.tiler.BCFText;
-import com.derelictech.bitcorfab.prototyping.tiler.BCFTiler;
-import com.derelictech.bitcorfab.prototyping.tiler.BCFTilerJsonData;
-import com.derelictech.bitcorfab.prototyping.tiler.BCFTileSetJsonData;
+import com.derelictech.bitcorfab.ui.BCFText;
+import com.derelictech.bitcorfab.ui.data.BCFTiler;
 
 /**
  * Project: bitcorfab
@@ -20,6 +15,8 @@ import com.derelictech.bitcorfab.prototyping.tiler.BCFTileSetJsonData;
  * Description:
  */
 public class GameScreen extends BCFScreenAdapter {
+
+    BCFTiler tileFont5x5;
 
     public GameScreen(Game g) {
         super(g);
@@ -31,7 +28,6 @@ public class GameScreen extends BCFScreenAdapter {
 
         Image bg = new Image(new Texture("bg_rect.png"));
         bg.setSize(CONST.WORLD_W, CONST.WORLD_H);
-//        stage.addActor(bg);
 
         BCFGrid<Image> grid = new BCFGrid<Image>();
         grid.setPosition(1, 1);
@@ -48,71 +44,29 @@ public class GameScreen extends BCFScreenAdapter {
         grid.set(4, 4, grid_item_xi);
         grid.set(3, 4, grid_item_xi);
 
-//        root.addActor(grid);
-
-//        Json json = new Json();
-//        json.setElementType(BCFTilerJsonData.class, "sets", BCFTileSetJsonData.class);
-//        BCFTilerJsonData tiler = json.fromJson(BCFTilerJsonData.class, Gdx.files.internal("font/tilefont5x5/bcf_font_grid5x5.json"));
-//
-//        BCFTileSetJsonData tileset = (BCFTileSetJsonData)tiler.sets.get("lc");
-//
-//        int startX = tileset.startX;
-//        int startY = tileset.startY;
-//        int width = tileset.width;
-//        int height = tileset.height;
-//        int xPad = tileset.xPad;
-//        int yPad = tileset.yPad;
-//        int numChars = tileset.cols;
-//
-//        float drawAtX = 0.0f;
-//        float drawAtY = 0.0f;
-//        float scale = 0.33f;
-//
-//        TextureRegion upper = new TextureRegion(
-//                new Texture(Gdx.files.internal("font/tilefont5x5/bcf_font_grid5x5.png")),
-//                startX,
-//                startY,
-//                (width + xPad) * numChars,
-//                height + yPad
-//        );
-//
-//        TextureRegion[][] regions = upper.split((width + xPad), (height + yPad));
-//
-//        int idx = 0;
-//        for(TextureRegion tr : regions[0]) {
-//            Image i = new Image(tr);
-//            i.setPosition(drawAtX + (idx * width * scale), drawAtY);
-//            i.setSize((float)width * scale, (float)height * scale);
-////            root.addActor(i);
-//            idx++;
-//        }
-
-        BCFTiler tilefont5x5 = new BCFTiler("font/tilefont5x5/bcf_font_grid5x5.json");
-
-//        int idx2 = 0;
-//        for(TextureRegion tr : tilefont5x5.regionsFromString("ABCdef")) {
-//            Image i = new Image(tr);
-//            i.setPosition(drawAtX + (idx2 * width * scale), drawAtY);
-//            i.setSize((float)width * scale, (float)height * scale);
-////            root.addActor(i);
-//            idx2++;
-//        }
-
+        tileFont5x5 = new BCFTiler("font/tilefont5x5/bcf_font_grid5x5.json");
         root.top().left();
 
-        BCFText mytext = new BCFText("Hello World! 0123456789\nABCDEFGHIJKLMNOPQRSTUVWXYZ\nabcdefghijklmnopqrstuvwxyz", tilefont5x5);
-        mytext.setScale(0.25f);
-        root.add(mytext);
+        BCFText mytext = new BCFText("0123456789\nABCDEFGHIJKLMNOPQRSTUVWXYZ\nabcdefghijklmnopqrstuvwxyz", tileFont5x5);
+        mytext.setScale(0.3f);
+        root.add(mytext).left();
         root.row();
 
-        BCFText bitcorfab = new BCFText("BITCORFAB", tilefont5x5);
+        BCFText symbolsTest = new BCFText("!@#$%^&*()`-=[]\\;',./~_+{}|:\"<>?", tileFont5x5);
+        symbolsTest.setScale(0.5f);
+        root.add(symbolsTest).left();
+        root.row();
+
+        BCFText bitcorfab = new BCFText("BITCORFAB", tileFont5x5);
         bitcorfab.setScale(1.25f);
         root.add(bitcorfab).left();
         root.row();
 
-        BCFText symbolsTest = new BCFText("!@#$%^&*()`-=[]\\;',./~_+{}|:\"<>?", tilefont5x5);
-        symbolsTest.setScale(0.5f);
-        root.add(symbolsTest).left();
     }
 
+    @Override
+    public void hide() {
+        super.hide();
+        tileFont5x5.dispose();
+    }
 }
