@@ -20,6 +20,14 @@ public class BCFText extends Actor {
         super();
         this.text = text;
         this.tiler = tiler;
+        Vector2 size = tiler.getDimensions(this.text);
+        this.setSize(size.x * getScaleX(), size.y * getScaleY());
+    }
+
+    public void setText(String text) {
+        this.text = text;
+        Vector2 size = this.tiler.getDimensions(text);
+        this.setSize(size.x * getScaleX(), size.y * getScaleY());
     }
 
     @Override
