@@ -114,15 +114,15 @@ public class BCFTiler implements Disposable{
      * @param x: x position to draw at
      * @param y: y position to draw at
      */
-    public void draw(Batch batch, String string, float x, float y, float scaleX, float scaleY, float rotation) {
+    public void draw(Batch batch, String string, float x, float y, float scale, float rotation) {
         float xpos = x;
         for(Character c : string.toCharArray()) {
             if(!characterRegions.containsKey(c)) {
                 continue;
             }
             TextureRegion tr = characterRegions.get(c);
-            batch.draw(tr, xpos, y, 0, 0, tr.getRegionWidth(), tr.getRegionHeight(), scaleX, scaleY, rotation);
-            xpos += scaleX * tr.getRegionWidth();
+            batch.draw(tr, xpos, y, 0, 0, tr.getRegionWidth(), tr.getRegionHeight(), scale, scale, rotation);
+            xpos += scale * tr.getRegionWidth();
         }
     }
 

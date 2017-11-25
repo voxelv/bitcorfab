@@ -5,13 +5,13 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.math.GridPoint2;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
+import com.derelictech.bitcorfab.prototyping.grid.ActorGrid;
 import com.derelictech.bitcorfab.ui.BCFText;
 import com.derelictech.bitcorfab.ui.data.BCFTiler;
-
-import static com.badlogic.gdx.Gdx.input;
 
 /**
  * Project: bitcorfab
@@ -35,7 +35,7 @@ public class GameScreen extends BCFScreenAdapter {
         Image bg = new Image(new Texture("bg_rect.png"));
         bg.setSize(CONST.WORLD_W, CONST.WORLD_H);
 
-        BCFGrid<Image> grid = new BCFGrid<Image>();
+        ActorGrid grid = new ActorGrid(10.0f, 10.0f);
         grid.setPosition(1, 1);
         Image grid_item_base = new Image(new Texture(Gdx.files.internal("items/grid_item_base.png")));
         Image grid_item_a = new Image(new Texture(Gdx.files.internal("items/grid_item_a.png")));
@@ -43,30 +43,37 @@ public class GameScreen extends BCFScreenAdapter {
         Image grid_item_phi = new Image(new Texture(Gdx.files.internal("items/grid_item_phi.png")));
         Image grid_item_xi = new Image(new Texture(Gdx.files.internal("items/grid_item_xi.png")));
 
-        grid.set(0, 0, grid_item_base);
-        grid.set(1, 1, grid_item_a);
-        grid.set(2, 2, grid_item_b);
-        grid.set(3, 3, grid_item_phi);
-        grid.set(4, 4, grid_item_xi);
-        grid.set(3, 4, grid_item_xi);
+        grid.addToGrid(grid_item_base, new GridPoint2(0, 0));
+        grid.addToGrid(grid_item_a, new GridPoint2(1, 1));
+        grid.addToGrid(grid_item_b, new GridPoint2(2, 2));
+        grid.addToGrid(grid_item_phi, new GridPoint2(3, 3));
+        grid.addToGrid(grid_item_xi, new GridPoint2(4, 4));
+
+        Gdx.app.debug("GRID", grid.grid.toString());
 
         tileFont5x5 = new BCFTiler("font/tilefont5x5/bcf_font_grid5x5.json");
         root.top().left();
 
-        BCFText mytext = new BCFText("0123456789\nABCDEFGHIJKLMNOPQRSTUVWXYZ\nabcdefghijklmnopqrstuvwxyz", tileFont5x5);
-        mytext.setScale(1.0f);
-        root.add(mytext).left();
+        BCFText mytext = new BCFText("0123456789\nABCDEFGHIJKLMNOPQRSTUVWXYZ\nabcdefghijklmnopqrstuvwxyz",
+                tileFont5x5,
+                0.5f);
+        root.add(mytext).left().fill();
         root.row();
 
-        BCFText symbolsTest = new BCFText("!@#$%^&*()`-=[]\\;',./~_+{}|:\"<>?", tileFont5x5);
-        symbolsTest.setScale(1.0f);
-        root.add(symbolsTest).left();
+        BCFText symbolsTest = new BCFText("!@#$%^&*()`-=[]\\;',./~_+{}|:\"<>?",
+                tileFont5x5,
+                0.5f)
+                .setScrollSpeed(0.2f);
+        root.add(symbolsTest).left().fill();
         root.row();
 
-        BCFText bitcorfab = new BCFText("BITCORFAB", tileFont5x5);
-        bitcorfab.setScale(1.0f);
-        root.add(bitcorfab).left();
+        BCFText bitcorfab = new BCFText("BIT COR FAB",
+                tileFont5x5,
+                0.5f);
+        root.add(bitcorfab).left().fill();
         root.row();
+
+        root.add(grid).left();
 
         stage.setDebugAll(true);
 
