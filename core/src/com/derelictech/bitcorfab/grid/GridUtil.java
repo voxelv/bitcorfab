@@ -1,4 +1,4 @@
-package com.derelictech.bitcorfab.prototyping.grid;
+package com.derelictech.bitcorfab.grid;
 
 import com.badlogic.gdx.math.GridPoint2;
 import com.badlogic.gdx.math.MathUtils;

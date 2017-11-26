@@ -25,4 +25,5 @@ public class CONST {
     public static final float GRID_PITCH = 8.05f;
 
     public static final float TEXT_SCROLL_SPEED = 0.5f;
+    public static final int TEXT_SCROLL_PAD_CHARS = 4;
 }

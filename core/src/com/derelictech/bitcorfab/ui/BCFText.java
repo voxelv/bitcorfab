@@ -1,6 +1,5 @@
 package com.derelictech.bitcorfab.ui;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Actor;
@@ -22,7 +21,8 @@ public class BCFText extends Actor {
     private float textScale;
     private boolean scrolling;
     private float scrollSpeed;
-    private float scrollOffset;
+    private float scrollOffset1;
+    private float scrollOffset2;
 
     public BCFText(String text, BCFTiler tiler, float size) {
         super();
@@ -33,9 +33,10 @@ public class BCFText extends Actor {
         textSize = this.tiler.getDimensions(this.text);
         textScale = size;
 
-        scrolling = true;
+        scrolling = false;
         scrollSpeed = CONST.TEXT_SCROLL_SPEED;
-        scrollOffset = 0.0f;
+        scrollOffset1 = 0.0f;
+        scrollOffset2 = 0.0f;
 
         setHeight(textSize.y * textScale);
     }
@@ -60,21 +61,28 @@ public class BCFText extends Actor {
     public void act(float delta) {
         super.act(delta);
         if(scrolling && (textSize.x * textScale) > getWidth()) {
-            scrollOffset += scrollSpeed;
-            if(scrollOffset > (textSize.x * textScale)) {
-                scrollOffset = -getWidth();
+            scrollOffset1 -= scrollSpeed;
+            if(scrollOffset1 < -(textSize.x * textScale)) {
+                scrollOffset1 = scrollOffset2;
             }
         }
         else {
-            scrollOffset = 0.0f;
+            scrollOffset1 = 0.0f;
         }
+        scrollOffset2 =
+                scrollOffset1
+                + (textSize.x * textScale)
+                + (CONST.TEXT_SCROLL_PAD_CHARS * tiler.getCharacterDimensions(' ').x * textScale);
     }
 
     @Override
     public void draw(Batch batch, float parentAlpha) {
         batch.flush();
-        if(clipBegin(getX(), getY(), getWidth(), getHeight())) {
-            tiler.draw(batch, this.text, getX() - scrollOffset, getY(), textScale, getRotation());
+        if(clipBegin()) {
+            tiler.draw(batch, this.text, getX() + scrollOffset1, getY(), textScale, getRotation());
+            if(scrolling) {
+                tiler.draw(batch, this.text, getX() + scrollOffset2, getY(), textScale, getRotation());
+            }
             batch.flush();
             clipEnd();
         }

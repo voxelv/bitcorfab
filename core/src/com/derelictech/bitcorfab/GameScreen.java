@@ -9,9 +9,14 @@ import com.badlogic.gdx.math.GridPoint2;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
-import com.derelictech.bitcorfab.prototyping.grid.ActorGrid;
+import com.badlogic.gdx.scenes.scene2d.ui.Table;
+import com.derelictech.bitcorfab.grid.ActorGrid;
+import com.derelictech.bitcorfab.prototyping.VoxTextButton;
 import com.derelictech.bitcorfab.ui.BCFText;
+import com.derelictech.bitcorfab.ui.ClippingArea;
 import com.derelictech.bitcorfab.ui.data.BCFTiler;
+
+import javax.sound.sampled.Clip;
 
 /**
  * Project: bitcorfab
@@ -46,7 +51,7 @@ public class GameScreen extends BCFScreenAdapter {
         grid.addToGrid(grid_item_base, new GridPoint2(0, 0));
         grid.addToGrid(grid_item_a, new GridPoint2(1, 1));
         grid.addToGrid(grid_item_b, new GridPoint2(2, 2));
-        grid.addToGrid(grid_item_phi, new GridPoint2(3, 3));
+        grid.addToGrid(grid_item_phi, new GridPoint2(5, 5));
         grid.addToGrid(grid_item_xi, new GridPoint2(4, 4));
 
         Gdx.app.debug("GRID", grid.grid.toString());
@@ -56,7 +61,8 @@ public class GameScreen extends BCFScreenAdapter {
 
         BCFText mytext = new BCFText("0123456789\nABCDEFGHIJKLMNOPQRSTUVWXYZ\nabcdefghijklmnopqrstuvwxyz",
                 tileFont5x5,
-                0.5f);
+                0.5f)
+                .setScrolling(true);
         root.add(mytext).left().fill();
         root.row();
 
@@ -67,13 +73,25 @@ public class GameScreen extends BCFScreenAdapter {
         root.add(symbolsTest).left().fill();
         root.row();
 
-        BCFText bitcorfab = new BCFText("BIT COR FAB",
+        Table table1 = new Table();
+        table1.left();
+        BCFText bitcorfab = new BCFText("BITCORFAB",
                 tileFont5x5,
                 0.5f);
-        root.add(bitcorfab).left().fill();
+        table1.add(bitcorfab).left().width(30.0f);
+
+        VoxTextButton button1 = new VoxTextButton(
+                "buttons/button_style1.png",
+                "buttons/button_style1_down.png",
+                "TEST");
+
+        table1.add(button1).grow();
+
+        root.add(table1).left().fill();
         root.row();
 
-        root.add(grid).left();
+        ClippingArea gameArea = new ClippingArea(grid);
+        root.add(gameArea).grow();
 
         stage.setDebugAll(true);
 

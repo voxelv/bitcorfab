@@ -86,8 +86,8 @@ public class BCFTiler implements Disposable{
 
     /**
      * Get the dimensions of a string after being drawn
-     * @param string
-     * @return
+     * @param string the {@link String} to get the dimensions of
+     * @return the dimensions of the string as a {@link Vector2}
      */
     public Vector2 getDimensions(String string) {
         float w = 0.0f, h = 0.0f;
@@ -105,6 +105,22 @@ public class BCFTiler implements Disposable{
             }
         }
         return new Vector2(w, h);
+    }
+
+    /**
+     * Get the dimensions of a character
+     * @param c the {@link Character} to get the dimensions of
+     * @return the dimensions of the character as a {@link Vector2}
+     */
+    public Vector2 getCharacterDimensions(Character c) {
+        if(characterRegions.containsKey(c)) {
+            TextureRegion tr = characterRegions.get(c);
+            return new Vector2(tr.getRegionWidth(), tr.getRegionHeight());
+        }
+        else
+        {
+            return new Vector2(0.0f, 0.0f);
+        }
     }
 
     /**

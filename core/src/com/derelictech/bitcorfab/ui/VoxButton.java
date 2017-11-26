@@ -1,4 +1,4 @@
-package com.derelictech.bitcorfab.prototyping;
+package com.derelictech.bitcorfab.ui;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
@@ -25,8 +25,6 @@ public class VoxButton extends Actor {
     public VoxButton(String buttonUpFilename, String buttonDownFilename) {
         buttonUp = new TextureRegion(new Texture(Gdx.files.internal(buttonUpFilename)));
         buttonDown = new TextureRegion(new Texture(Gdx.files.internal(buttonDownFilename)));
-
-        setSize(6, 4);
 
         addListener(new ClickListener(Input.Buttons.LEFT){
             @Override

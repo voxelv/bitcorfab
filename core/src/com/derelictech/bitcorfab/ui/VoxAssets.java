@@ -1,4 +1,4 @@
-package com.derelictech.bitcorfab.prototyping;
+package com.derelictech.bitcorfab.ui;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
